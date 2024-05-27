@@ -4,10 +4,13 @@
  */
 package main;
 
-/**
- *
- * @author 1072413039
- */
+import dao.DAO;
+import model.Amigo;
+import model.Ferramenta;
+
 public class Main {
-    
+
+    public static void main(String[] args) {
+
+    }
 }

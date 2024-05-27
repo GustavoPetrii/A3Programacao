@@ -1,19 +1,28 @@
 package model;
 
-public class CadastroAmigo {
+public class Amigo {
 
+    private int id;
     private String nome;
     private String telefone;
 
-
-    public CadastroAmigo() {
-        this("", "");
+    public Amigo() {
+        this(0, "", "");
     }
 
-    public CadastroAmigo(String nome, String telefone) {
+    public Amigo(int id, String nome, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.telefone = telefone;
-   
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setNome(int id) {
+        this.id = id;
     }
 
     public String getNome() {

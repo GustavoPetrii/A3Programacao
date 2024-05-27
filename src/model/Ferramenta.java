@@ -1,23 +1,34 @@
 package model;
 
-public class CadastroFerramenta {
+public class Ferramenta {
 
+    private int id;
     private String nome;
     private String marca;
     private double custo;
     private int quantidade;
 
-    public CadastroFerramenta() {
-        this("", "", 0, 0);
+    public Ferramenta() {
+        this(0, "", "", 0, 0);
     }
 
-    public CadastroFerramenta(String nome, String marca, double custo, int quantidade) {
+    public Ferramenta(int id, String nome, String marca, double custo, int quantidade) {
+        this.id = id;
         this.nome = nome;
         this.marca = marca;
         this.custo = custo;
         this.quantidade = quantidade;
     }
 
+    
+     public int getId() {
+        return id;
+    }
+
+    public void setNome(int id) {
+        this.id = id;
+    }
+    
     public String getNome() {
         return nome;
     }
