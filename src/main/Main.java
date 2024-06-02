@@ -4,7 +4,6 @@
  */
 package main;
 
-import dao.DAO;
 import model.Amigo;
 import model.Ferramenta;
 

@@ -25,7 +25,7 @@ public class Ferramenta {
         return id;
     }
 
-    public void setNome(int id) {
+    public void setId(int id) {
         this.id = id;
     }
     
