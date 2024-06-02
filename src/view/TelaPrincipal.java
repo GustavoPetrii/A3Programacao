@@ -49,6 +49,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCadastros.add(telaCadastroFerramentas);
 
         telaCadastroAmigos.setText("Cadastrar Amigos");
+        telaCadastroAmigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                telaCadastroAmigosActionPerformed(evt);
+            }
+        });
         menuCadastros.add(telaCadastroAmigos);
 
         jMenuBar1.add(menuCadastros);
@@ -83,6 +88,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void telaCadastroFerramentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telaCadastroFerramentasActionPerformed
         new TelaCadastroFerramenta().setVisible(true);
     }//GEN-LAST:event_telaCadastroFerramentasActionPerformed
+
+    private void telaCadastroAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telaCadastroAmigosActionPerformed
+        new TelaCadastroAmigo().setVisible(true);
+    }//GEN-LAST:event_telaCadastroAmigosActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,6 +4,12 @@
  */
 package view;
 
+import dao.AmigoDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Amigo;
+
 /**
  *
  * @author gusta
@@ -11,10 +17,62 @@ package view;
 public class TelaCadastroAmigo extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaCadastroAmigo
+     * Creates new form TelaCadastroFerramenta
      */
     public TelaCadastroAmigo() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
+        jtAmigos.setRowSorter(new TableRowSorter(modelo));
+
+        readJTable();
+        comboBox();
+    }
+
+    public void comboBox() {
+        String[] myString = {"Nome", "Telefone"};
+        cbBusca.setModel(new javax.swing.DefaultComboBoxModel(myString));
+    }
+
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
+        modelo.setNumRows(0);
+        AmigoDAO adao = new AmigoDAO();
+
+        for (Amigo a : adao.readAmigo()) {
+
+            modelo.addRow(new Object[]{
+                a.getId(),
+                a.getNome(),
+                a.getTelefone(),});
+        }
+    }
+
+    public void readJTableForNome(String nome) {
+        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
+        modelo.setNumRows(0);
+        AmigoDAO adao = new AmigoDAO();
+
+        for (Amigo a : adao.readAmigoForNome(nome)) {
+
+            modelo.addRow(new Object[]{
+                a.getId(),
+                a.getNome(),
+                a.getTelefone(),});
+        }
+    }
+
+    public void readJTableForMarca(String nome) {
+        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
+        modelo.setNumRows(0);
+        AmigoDAO adao = new AmigoDAO();
+
+        for (Amigo a : adao.readAmigoForTel(nome)) {
+
+            modelo.addRow(new Object[]{
+                a.getId(),
+                a.getNome(),
+                a.getTelefone(),});
+        }
     }
 
     /**
@@ -26,21 +84,286 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        botaoCadastrar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        botaoDeletar = new javax.swing.JButton();
+        botaoAtualizar = new javax.swing.JButton();
+        txtBuscaNome = new javax.swing.JTextField();
+        botaoBuscar = new javax.swing.JButton();
+        cbBusca = new javax.swing.JComboBox<>();
+        txtTel = new javax.swing.JFormattedTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtAmigos = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Ferramenta");
+
+        botaoCadastrar.setText("Cadastrar");
+        botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCadastrarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Nome:");
+
+        jLabel3.setText("Telefone:");
+
+        botaoDeletar.setText("Excluir");
+        botaoDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDeletarActionPerformed(evt);
+            }
+        });
+
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
+            }
+        });
+
+        txtBuscaNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscaNomeActionPerformed(evt);
+            }
+        });
+
+        botaoBuscar.setText("Buscar");
+        botaoBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBuscarActionPerformed(evt);
+            }
+        });
+
+        cbBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbBuscaActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botaoCadastrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoDeletar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoAtualizar)
+                        .addGap(60, 60, 60)
+                        .addComponent(cbBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoBuscar)
+                        .addGap(72, 72, 72))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(232, 232, 232)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoCadastrar)
+                    .addComponent(botaoDeletar)
+                    .addComponent(botaoAtualizar)
+                    .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoBuscar)
+                    .addComponent(cbBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jtAmigos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Nome", "Telefone"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtAmigos.getTableHeader().setReorderingAllowed(false);
+        jtAmigos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtAmigosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtAmigos);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+
+        Amigo a = new Amigo();
+        AmigoDAO dao = new AmigoDAO();
+
+        a.setNome(txtNome.getText());
+        a.setTelefone(txtTel.getText());
+
+        dao.createAmigo(a);
+
+        txtNome.setText("");
+        txtTel.setText("");
+        
+        readJTable();
+
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
+
+        if (jtAmigos.getSelectedRow() != -1) {
+
+            Amigo a = new Amigo();
+            AmigoDAO dao = new AmigoDAO();
+
+            a.setId((int) jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 0));
+
+            dao.deleteAmigo(a);
+
+            txtNome.setText("");
+            txtTel.setText("");
+
+            readJTable();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um amigo para excluir.");
+
+        }
+    }//GEN-LAST:event_botaoDeletarActionPerformed
+
+    private void jtAmigosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAmigosMouseClicked
+
+        if (jtAmigos.getSelectedRow() != -1) {
+
+            txtNome.setText(jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 1).toString());
+            txtTel.setText(jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 2).toString());
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um amigo para atualizar.");
+
+        }
+    }//GEN-LAST:event_jtAmigosMouseClicked
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        if (jtAmigos.getSelectedRow() != -1) {
+
+            Amigo a = new Amigo();
+            AmigoDAO dao = new AmigoDAO();
+
+            a.setNome(txtNome.getText());
+            a.setTelefone(txtTel.getText());
+            a.setId((int) jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 0));
+
+            dao.updateAmigo(a);
+
+            txtNome.setText("");
+            txtTel.setText("");
+
+            readJTable();
+
+        }
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
+
+    private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscaNomeActionPerformed
+
+    private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
+        String itemSelecionado = cbBusca.getSelectedItem().toString();
+        String nome = "Nome";
+        String marca = "Telefone";
+
+        if (itemSelecionado.equalsIgnoreCase(nome)) {
+            readJTableForNome(txtBuscaNome.getText());
+        }
+        if (itemSelecionado.equalsIgnoreCase(marca)) {
+            readJTableForMarca(txtBuscaNome.getText());
+        }
+
+    }//GEN-LAST:event_botaoBuscarActionPerformed
+
+    private void cbBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBuscaActionPerformed
+
+    }//GEN-LAST:event_cbBuscaActionPerformed
+
+    private void txtTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -68,6 +391,21 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaCadastroAmigo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -78,5 +416,19 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoBuscar;
+    private javax.swing.JButton botaoCadastrar;
+    private javax.swing.JButton botaoDeletar;
+    private javax.swing.JComboBox<String> cbBusca;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtAmigos;
+    private javax.swing.JTextField txtBuscaNome;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JFormattedTextField txtTel;
     // End of variables declaration//GEN-END:variables
 }

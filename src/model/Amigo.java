@@ -21,7 +21,7 @@ public class Amigo {
         return id;
     }
 
-    public void setNome(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
