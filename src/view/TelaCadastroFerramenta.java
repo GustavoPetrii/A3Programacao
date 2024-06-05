@@ -116,7 +116,7 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
         jTFerramentas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Ferramenta");
+        setTitle("Gerenciamento de Ferramentas");
 
         txtCusto.setText("0.00");
         txtCusto.addActionListener(new java.awt.event.ActionListener() {

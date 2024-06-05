@@ -6,12 +6,12 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuCadastros">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cadastros"/>
+            <Property name="text" type="java.lang.String" value="Gerenciar"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="telaCadastroFerramentas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cadastrar Ferramentas"/>
+                <Property name="text" type="java.lang.String" value="Gerenciar Ferramentas"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telaCadastroFerramentasActionPerformed"/>
@@ -19,10 +19,18 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="telaCadastroAmigos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cadastrar Amigos"/>
+                <Property name="text" type="java.lang.String" value="Gerenciar Amigos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telaCadastroAmigosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="telaCadastroDeEmpr&#xe9;stimos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gerenciar Empr&#xe9;stimos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="telaCadastroDeEmpr&#xe9;stimosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

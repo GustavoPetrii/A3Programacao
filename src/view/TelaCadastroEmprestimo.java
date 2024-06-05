@@ -5,73 +5,55 @@
 package view;
 
 import dao.AmigoDAO;
+import dao.EmprestimoDAO;
+import dao.FerramentaDAO;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Amigo;
+import model.Emprestimo;
+import model.Ferramenta;
 
 /**
  *
  * @author gusta
  */
-public class TelaCadastroAmigo extends javax.swing.JFrame {
+public class TelaCadastroEmprestimo extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCadastroFerramenta
      */
-    public TelaCadastroAmigo() {
+    public TelaCadastroEmprestimo() {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
-        jtAmigos.setRowSorter(new TableRowSorter(modelo));
+        DefaultTableModel modelo = (DefaultTableModel) jtEmprestimos.getModel();
+        jtEmprestimos.setRowSorter(new TableRowSorter(modelo));
 
         readJTable();
-        comboBox();
+        comboBoxBuscar();
     }
 
-    public void comboBox() {
-        String[] myString = {"Nome", "Telefone"};
+    public void comboBoxBuscar() {
+        String[] myString = {"Amigo", "Ferramenta"};
         cbBusca.setModel(new javax.swing.DefaultComboBoxModel(myString));
     }
 
     public void readJTable() {
-        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jtEmprestimos.getModel();
         modelo.setNumRows(0);
-        AmigoDAO adao = new AmigoDAO();
+        EmprestimoDAO edao = new EmprestimoDAO();
 
-        for (Amigo a : adao.readAmigo()) {
+        for (Emprestimo e : edao.readEmprestimo()) {
 
             modelo.addRow(new Object[]{
-                a.getId(),
-                a.getNome(),
-                a.getTelefone(),});
-        }
-    }
-
-    public void readJTableForNome(String nome) {
-        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
-        modelo.setNumRows(0);
-        AmigoDAO adao = new AmigoDAO();
-
-        for (Amigo a : adao.readAmigoForNome(nome)) {
-
-            modelo.addRow(new Object[]{
-                a.getId(),
-                a.getNome(),
-                a.getTelefone(),});
-        }
-    }
-
-    public void readJTableForMarca(String nome) {
-        DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
-        modelo.setNumRows(0);
-        AmigoDAO adao = new AmigoDAO();
-
-        for (Amigo a : adao.readAmigoForTel(nome)) {
-
-            modelo.addRow(new Object[]{
-                a.getId(),
-                a.getNome(),
-                a.getTelefone(),});
+                e.getIdAmigo(),
+                e.getIdFerramenta(),
+                e.getDataEmprestimo(),
+                e.getDataDevolucao(),});
         }
     }
 
@@ -87,20 +69,24 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         botaoCadastrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         botaoDeletar = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         txtBuscaNome = new javax.swing.JTextField();
         botaoBuscar = new javax.swing.JButton();
         cbBusca = new javax.swing.JComboBox<>();
-        txtTel = new javax.swing.JFormattedTextField();
+        txtDtDevolucao = new javax.swing.JFormattedTextField();
+        cbAmigo = new javax.swing.JComboBox();
+        cbFerramenta = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtDtEmprestimo = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtAmigos = new javax.swing.JTable();
+        jtEmprestimos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gerenciamento de Amigos");
+        setTitle("Gerenciamento de Empréstimos");
 
         botaoCadastrar.setText("Cadastrar");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -109,9 +95,9 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Nome:");
+        jLabel2.setText("Data do empréstimo:");
 
-        jLabel3.setText("Telefone:");
+        jLabel3.setText("Data de devolução:");
 
         botaoDeletar.setText("Excluir");
         botaoDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,13 +134,50 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         });
 
         try {
-            txtTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            txtDtDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtTel.addActionListener(new java.awt.event.ActionListener() {
+        txtDtDevolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelActionPerformed(evt);
+                txtDtDevolucaoActionPerformed(evt);
+            }
+        });
+
+        cbAmigo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbAmigo.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbAmigoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        cbFerramenta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFerramenta.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbFerramentaAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        jLabel1.setText("Amigo:");
+
+        jLabel4.setText("Ferramenta:");
+
+        try {
+            txtDtEmprestimo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtDtEmprestimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDtEmprestimoActionPerformed(evt);
             }
         });
 
@@ -181,28 +204,40 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                         .addGap(72, 72, 72))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(232, 232, 232)
-                                .addComponent(jLabel3))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cbAmigo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1)
+                            .addComponent(txtDtEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtDtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cbFerramenta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79)
+                    .addComponent(txtDtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDtEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCadastrar)
                     .addComponent(botaoDeletar)
@@ -213,39 +248,42 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jtAmigos.setModel(new javax.swing.table.DefaultTableModel(
+        jtEmprestimos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "Telefone"
+                "Amigo", "Ferramenta", "Data empréstimo", "Data devolução"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jtAmigos.getTableHeader().setReorderingAllowed(false);
-        jtAmigos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtEmprestimos.getTableHeader().setReorderingAllowed(false);
+        jtEmprestimos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtAmigosMouseClicked(evt);
+                jtEmprestimosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtAmigos);
+        jScrollPane1.setViewportView(jtEmprestimos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -253,7 +291,10 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,34 +310,40 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
 
-        Amigo a = new Amigo();
-        AmigoDAO dao = new AmigoDAO();
-
-        a.setNome(txtNome.getText());
-        a.setTelefone(txtTel.getText());
-
-        dao.createAmigo(a);
-
-        txtNome.setText("");
-        txtTel.setText("");
+        Emprestimo e = new Emprestimo();
+        EmprestimoDAO edao = new EmprestimoDAO();
         
+        String amigoSelecionado = cbAmigo.getSelectedItem().toString();
+        String ferramentaSelecionada = cbFerramenta.getSelectedItem().toString();
+        
+        e.setIdAmigo(Integer.parseInt(amigoSelecionado));
+        e.setIdFerramenta(Integer.parseInt(ferramentaSelecionada));
+        e.setDataEmprestimo(Date.valueOf(txtDtEmprestimo.getText()));
+        e.setDataDevolucao(Date.valueOf(txtDtDevolucao.getText()));
+
+        edao.createEmprestimo(e);
+
+        txtDtEmprestimo.setText("");
+        txtDtDevolucao.setText("");
+
         readJTable();
 
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
 
-        if (jtAmigos.getSelectedRow() != -1) {
+        if (jtEmprestimos.getSelectedRow() != -1) {
 
-            Amigo a = new Amigo();
-            AmigoDAO dao = new AmigoDAO();
+            Emprestimo e = new Emprestimo();
+            EmprestimoDAO dao = new EmprestimoDAO();
 
-            a.setId((int) jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 0));
+            e.setIdFerramenta((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 1));
+            e.setIdAmigo((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 0));
 
-            dao.deleteAmigo(a);
+            dao.deleteEmprestimo(e);
 
-            txtNome.setText("");
-            txtTel.setText("");
+            txtDtEmprestimo.setText("");
+            txtDtDevolucao.setText("");
 
             readJTable();
 
@@ -306,33 +353,33 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoDeletarActionPerformed
 
-    private void jtAmigosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAmigosMouseClicked
+    private void jtEmprestimosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEmprestimosMouseClicked
 
-        if (jtAmigos.getSelectedRow() != -1) {
-
-            txtNome.setText(jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 1).toString());
-            txtTel.setText(jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 2).toString());
+        if (jtEmprestimos.getSelectedRow() != -1) {
+            
+            txtDtEmprestimo.setText(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 2).toString());
+            txtDtDevolucao.setText(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 3).toString());
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um amigo para atualizar.");
 
         }
-    }//GEN-LAST:event_jtAmigosMouseClicked
+    }//GEN-LAST:event_jtEmprestimosMouseClicked
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
-        if (jtAmigos.getSelectedRow() != -1) {
+        if (jtEmprestimos.getSelectedRow() != -1) {
 
-            Amigo a = new Amigo();
-            AmigoDAO dao = new AmigoDAO();
+            Emprestimo e = new Emprestimo();
+            EmprestimoDAO dao = new EmprestimoDAO();
 
-            a.setNome(txtNome.getText());
-            a.setTelefone(txtTel.getText());
-            a.setId((int) jtAmigos.getValueAt(jtAmigos.getSelectedRow(), 0));
+            e.setDataEmprestimo(Date.valueOf(txtDtEmprestimo.getText()));
+            e.setDataDevolucao(Date.valueOf(txtDtDevolucao.getText()));
+            e.setIdFerramenta((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 1));
 
-            dao.updateAmigo(a);
+            dao.updateEmprestimo(e);
 
-            txtNome.setText("");
-            txtTel.setText("");
+            txtDtEmprestimo.setText("");
+            txtDtDevolucao.setText("");
 
             readJTable();
 
@@ -344,16 +391,16 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscaNomeActionPerformed
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        String itemSelecionado = cbBusca.getSelectedItem().toString();
-        String nome = "Nome";
-        String marca = "Telefone";
-
-        if (itemSelecionado.equalsIgnoreCase(nome)) {
-            readJTableForNome(txtBuscaNome.getText());
-        }
-        if (itemSelecionado.equalsIgnoreCase(marca)) {
-            readJTableForMarca(txtBuscaNome.getText());
-        }
+//        String itemSelecionado = cbBusca.getSelectedItem().toString();
+//        String nome = "Nome";
+//        String marca = "Telefone";
+//
+//        if (itemSelecionado.equalsIgnoreCase(nome)) {
+//            readJTableForNome(txtBuscaNome.getText());
+//        }
+//        if (itemSelecionado.equalsIgnoreCase(marca)) {
+//            readJTableForMarca(txtBuscaNome.getText());
+//        }
 
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
@@ -361,9 +408,35 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cbBuscaActionPerformed
 
-    private void txtTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelActionPerformed
+    private void txtDtDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtDevolucaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelActionPerformed
+    }//GEN-LAST:event_txtDtDevolucaoActionPerformed
+
+    private void txtDtEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtEmprestimoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDtEmprestimoActionPerformed
+
+    private void cbAmigoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbAmigoAncestorAdded
+        AmigoDAO dao = new AmigoDAO();
+        
+        List<Amigo> lista = dao.readAmigo();
+        cbAmigo.removeAllItems();
+        
+        for (Amigo a : lista){
+         cbAmigo.addItem(a);
+        }
+    }//GEN-LAST:event_cbAmigoAncestorAdded
+
+    private void cbFerramentaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbFerramentaAncestorAdded
+        FerramentaDAO dao = new FerramentaDAO();
+        
+        List<Ferramenta> lista = dao.readFerramenta();
+        cbFerramenta.removeAllItems();
+        
+        for (Ferramenta f : lista){
+         cbFerramenta.addItem(f);
+        }
+    }//GEN-LAST:event_cbFerramentaAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -382,14 +455,30 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroAmigo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroAmigo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroAmigo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroAmigo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -410,7 +499,7 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroAmigo().setVisible(true);
+                new TelaCadastroEmprestimo().setVisible(true);
             }
         });
     }
@@ -420,15 +509,19 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoDeletar;
+    private javax.swing.JComboBox cbAmigo;
     private javax.swing.JComboBox<String> cbBusca;
+    private javax.swing.JComboBox cbFerramenta;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtAmigos;
+    private javax.swing.JTable jtEmprestimos;
     private javax.swing.JTextField txtBuscaNome;
-    private javax.swing.JTextField txtNome;
-    private javax.swing.JFormattedTextField txtTel;
+    private javax.swing.JFormattedTextField txtDtDevolucao;
+    private javax.swing.JFormattedTextField txtDtEmprestimo;
     // End of variables declaration//GEN-END:variables
 }

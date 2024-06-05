@@ -30,6 +30,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCadastros = new javax.swing.JMenu();
         telaCadastroFerramentas = new javax.swing.JMenuItem();
         telaCadastroAmigos = new javax.swing.JMenuItem();
+        telaCadastroDeEmpréstimos = new javax.swing.JMenuItem();
         menuRelatorios = new javax.swing.JMenu();
         telaRelatorioFerramenta = new javax.swing.JMenuItem();
         telaRelatorioAmigo = new javax.swing.JMenuItem();
@@ -38,9 +39,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Home");
         setResizable(false);
 
-        menuCadastros.setText("Cadastros");
+        menuCadastros.setText("Gerenciar");
 
-        telaCadastroFerramentas.setText("Cadastrar Ferramentas");
+        telaCadastroFerramentas.setText("Gerenciar Ferramentas");
         telaCadastroFerramentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 telaCadastroFerramentasActionPerformed(evt);
@@ -48,13 +49,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCadastros.add(telaCadastroFerramentas);
 
-        telaCadastroAmigos.setText("Cadastrar Amigos");
+        telaCadastroAmigos.setText("Gerenciar Amigos");
         telaCadastroAmigos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 telaCadastroAmigosActionPerformed(evt);
             }
         });
         menuCadastros.add(telaCadastroAmigos);
+
+        telaCadastroDeEmpréstimos.setText("Gerenciar Empréstimos");
+        telaCadastroDeEmpréstimos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                telaCadastroDeEmpréstimosActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(telaCadastroDeEmpréstimos);
 
         jMenuBar1.add(menuCadastros);
 
@@ -92,6 +101,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void telaCadastroAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telaCadastroAmigosActionPerformed
         new TelaCadastroAmigo().setVisible(true);
     }//GEN-LAST:event_telaCadastroAmigosActionPerformed
+
+    private void telaCadastroDeEmpréstimosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telaCadastroDeEmpréstimosActionPerformed
+          new TelaCadastroEmprestimo().setVisible(true);
+    }//GEN-LAST:event_telaCadastroDeEmpréstimosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,6 +144,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuCadastros;
     private javax.swing.JMenu menuRelatorios;
     private javax.swing.JMenuItem telaCadastroAmigos;
+    private javax.swing.JMenuItem telaCadastroDeEmpréstimos;
     private javax.swing.JMenuItem telaCadastroFerramentas;
     private javax.swing.JMenuItem telaRelatorioAmigo;
     private javax.swing.JMenuItem telaRelatorioFerramenta;

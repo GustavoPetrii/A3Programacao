@@ -6,10 +6,11 @@ package main;
 
 import model.Amigo;
 import model.Ferramenta;
+import view.TelaPrincipal;
 
 public class Main {
 
     public static void main(String[] args) {
-
+        new TelaPrincipal().setVisible(true);
     }
 }

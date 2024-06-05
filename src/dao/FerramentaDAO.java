@@ -22,6 +22,7 @@ import model.Ferramenta;
  */
 public class FerramentaDAO {
 
+     //Função para cadastrar os dados no banco de dados.
     public void createFerramenta(Ferramenta f) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -44,7 +45,8 @@ public class FerramentaDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-
+    
+    //Função para ler os dados no banco de dados.
     public List<Ferramenta> readFerramenta() {
 
         Connection con = ConnectionFactory.getConnection();
@@ -79,6 +81,7 @@ public class FerramentaDAO {
 
     }
     
+    //Função para bsucar os dados na coluna nome no banco de dados.
     public List<Ferramenta> readFerramentaForNome(String nome) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -115,6 +118,7 @@ public class FerramentaDAO {
 
     }
     
+     //Função para bsucar os dados na coluna marca no banco de dados.
      public List<Ferramenta> readFerramentaForMarca(String nome) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -151,7 +155,7 @@ public class FerramentaDAO {
 
     }
     
-    
+    //Função para atualizar os dados no banco de dados.
     public void updateFerramenta(Ferramenta f) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -176,6 +180,7 @@ public class FerramentaDAO {
         }
     }
     
+    //Função para excluir os dados no banco de dados.
     public void deleteFerramenta(Ferramenta f) {
 
         Connection con = ConnectionFactory.getConnection();

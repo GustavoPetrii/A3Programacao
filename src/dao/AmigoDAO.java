@@ -18,6 +18,7 @@ import model.Amigo;
 
 public class AmigoDAO {
 
+    //Função para cadastrar os dados no banco de dados.
     public void createAmigo(Amigo a) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -40,6 +41,7 @@ public class AmigoDAO {
         }
     }
 
+    //Função para ler os dados no banco de dados.
     public List<Amigo> readAmigo() {
 
         Connection con = ConnectionFactory.getConnection();
@@ -71,7 +73,8 @@ public class AmigoDAO {
         return amigos;
 
     }
-
+    
+    //Função para buscar os dados na coluna nome no banco de dados.
     public List<Amigo> readAmigoForNome(String nome) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -105,7 +108,8 @@ public class AmigoDAO {
         return amigos;
 
     }
-
+    
+    //Função para buscar os dados na coluna telefone no banco de dados.
     public List<Amigo> readAmigoForTel(String nome) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -139,7 +143,8 @@ public class AmigoDAO {
         return amigos;
 
     }
-
+    
+    //Função para atualizar os dados no banco de dados.
     public void updateAmigo(Amigo a) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -161,7 +166,8 @@ public class AmigoDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-
+    
+    //Função para excluir os dados no banco de dados.
     public void deleteAmigo(Amigo a) {
 
         Connection con = ConnectionFactory.getConnection();

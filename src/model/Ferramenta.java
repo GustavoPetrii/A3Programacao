@@ -60,5 +60,13 @@ public class Ferramenta {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+    @Override
+    public String toString() {
+        return "" + id + "";
+    }
+    
+    
+    
 }
 
