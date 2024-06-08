@@ -27,12 +27,14 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         readJTable();
         comboBox();
     }
-
+    
+    //função para alterar os itens da comboBox
     public void comboBox() {
         String[] myString = {"Nome", "Telefone"};
         cbBusca.setModel(new javax.swing.DefaultComboBoxModel(myString));
     }
-
+    
+    //função para ler os dados do banco de dados e colocar na  tabela.
     public void readJTable() {
         DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
         modelo.setNumRows(0);
@@ -46,7 +48,8 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                 a.getTelefone(),});
         }
     }
-
+    
+    //função para ler os dados filtrados por nome do banco de dados e colocar na tabela.
     public void readJTableForNome(String nome) {
         DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
         modelo.setNumRows(0);
@@ -60,8 +63,9 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                 a.getTelefone(),});
         }
     }
-
-    public void readJTableForMarca(String nome) {
+    
+    //função para ler os dados filtrados por telefone do banco de dados e colocar na tabela.
+    public void readJTableForTel(String nome) {
         DefaultTableModel modelo = (DefaultTableModel) jtAmigos.getModel();
         modelo.setNumRows(0);
         AmigoDAO adao = new AmigoDAO();
@@ -266,7 +270,8 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+       
+    //Função para cadastrar os dados escritos nos textfields
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
 
         Amigo a = new Amigo();
@@ -283,7 +288,8 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         readJTable();
 
     }//GEN-LAST:event_botaoCadastrarActionPerformed
-
+    
+    //Função para excluir os dados selecionados da tabela clicando no botão
     private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
 
         if (jtAmigos.getSelectedRow() != -1) {
@@ -305,7 +311,8 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_botaoDeletarActionPerformed
-
+    
+    //Função para pegar dados da tabela e colocar nos textField
     private void jtAmigosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAmigosMouseClicked
 
         if (jtAmigos.getSelectedRow() != -1) {
@@ -318,7 +325,8 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jtAmigosMouseClicked
-
+    
+    //Função para atualizar os dados selecionados da tabela clicando no botão
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         if (jtAmigos.getSelectedRow() != -1) {
 
@@ -342,7 +350,8 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscaNomeActionPerformed
-
+    
+    //Função para buscar os dados que estão escritos no textField clicando no botão
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         String itemSelecionado = cbBusca.getSelectedItem().toString();
         String nome = "Nome";
@@ -352,7 +361,7 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             readJTableForNome(txtBuscaNome.getText());
         }
         if (itemSelecionado.equalsIgnoreCase(marca)) {
-            readJTableForMarca(txtBuscaNome.getText());
+            readJTableForTel(txtBuscaNome.getText());
         }
 
     }//GEN-LAST:event_botaoBuscarActionPerformed

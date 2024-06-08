@@ -40,10 +40,10 @@ public class Amigo {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-    @Override
+    
+     @Override
     public String toString() {
-        return ""+ id +"";
+        return nome;
     }
     
 }

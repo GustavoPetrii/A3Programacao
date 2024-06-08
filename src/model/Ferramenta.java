@@ -63,7 +63,7 @@ public class Ferramenta {
 
     @Override
     public String toString() {
-        return "" + id + "";
+        return nome;
     }
     
     

@@ -27,12 +27,14 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
         readJTable();
         comboBox();
     }
-
+    
+     //função para alterar os itens da comboBox
     public void comboBox() {
         String[] myString = {"Nome", "Marca"};
         cbBusca.setModel(new javax.swing.DefaultComboBoxModel(myString));
     }
-
+    
+    //função para ler os dados do banco de dados e colocar na  tabela.
     public void readJTable() {
         DefaultTableModel modelo = (DefaultTableModel) jTFerramentas.getModel();
         modelo.setNumRows(0);
@@ -50,7 +52,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
             });
         }
     }
-
+    
+     //função para ler os dados filtrados por nome do banco de dados e colocar na tabela.
     public void readJTableForNome(String nome) {
         DefaultTableModel modelo = (DefaultTableModel) jTFerramentas.getModel();
         modelo.setNumRows(0);
@@ -68,7 +71,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
             });
         }
     }
-
+    
+    //função para ler os dados filtrados por marca do banco de dados e colocar na tabela.
     public void readJTableForMarca(String nome) {
         DefaultTableModel modelo = (DefaultTableModel) jTFerramentas.getModel();
         modelo.setNumRows(0);
@@ -318,12 +322,11 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantidadeActionPerformed
-
+    
+    
+    //Função para cadastrar os dados escritos nos textfields
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
 
-//        DefaultTableModel dtmFerramentas = (DefaultTableModel) jTFerramentas.getModel();
-//        Object[] dados = {txtNome.getText(), txtMarca.getText(), txtCusto.getText(), txtQuantidade.getText()};
-//        dtmFerramentas.addRow(dados);
         Ferramenta f = new Ferramenta();
         FerramentaDAO dao = new FerramentaDAO();
 
@@ -342,7 +345,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
         readJTable();
 
     }//GEN-LAST:event_botaoCadastrarActionPerformed
-
+    
+     //Função para excluir os dados selecionados da tabela clicando no botão
     private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
 
         if (jTFerramentas.getSelectedRow() != -1) {
@@ -366,7 +370,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_botaoDeletarActionPerformed
-
+    
+    //Função para pegar dados da tabela e colocar nos textField
     private void jTFerramentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFerramentasMouseClicked
 
         if (jTFerramentas.getSelectedRow() != -1) {
@@ -381,7 +386,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jTFerramentasMouseClicked
-
+    
+    //Função para atualizar os dados selecionados da tabela clicando no botão
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         if (jTFerramentas.getSelectedRow() != -1) {
 
@@ -409,7 +415,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscaNomeActionPerformed
-
+    
+    //Função para buscar os dados que estão escritos no textField clicando no botão
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         String itemSelecionado = cbBusca.getSelectedItem().toString();
         String nome = "Nome";

@@ -8,61 +8,65 @@ import java.sql.Date;
 
 public class Emprestimo {
 
-    private int idFerramenta;
-    private int idAmigo;
-    private Date dataEmprestimo;
-    private Date dataDevolucao;
+    private int idEmprestimo;
+    private String nomeFerramenta;
+    private String nomeAmigo;
+    private String dataEmprestimo;
+    private String dataDevolucao;
     
      public Emprestimo() {
-        this(0, 0,new Date(0), new Date(0) );
+        this(0,"", "","", "" );
     }
 
 
-    public Emprestimo(int idFerramenta, int idAmigo, Date dataEmprestimo, Date dataDevolucao) {
-        this.idFerramenta = idFerramenta;
-        this.idAmigo = idAmigo;
+    public Emprestimo(int idEmprestimo, String nomeFerramenta,String nomeAmigo, String dataEmprestimo, String dataDevolucao) {
+        this.idEmprestimo = idEmprestimo;
+        this.nomeFerramenta = nomeFerramenta;
+        this.nomeAmigo = nomeAmigo;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
 
     }
 
-    public int getIdFerramenta() {
-        return idFerramenta;
+    public int getIdEmprestimo() {
+        return idEmprestimo;
     }
 
-    public void setIdFerramenta(int idFerramenta) {
-        this.idFerramenta = idFerramenta;
+    public void setIdEmprestimo(int idEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
     }
 
-    public int getIdAmigo() {
-        return idAmigo;
+    public String getNomeFerramenta() {
+        return nomeFerramenta;
     }
 
-    public void setIdAmigo(int idAmigo) {
-        this.idAmigo = idAmigo;
+    public void setNomeFerramenta(String nomeFerramenta) {
+        this.nomeFerramenta = nomeFerramenta;
     }
 
-    public Date getDataEmprestimo() {
+    public String getNomeAmigo() {
+        return nomeAmigo;
+    }
+
+    public void setNomeAmigo(String nomeAmigo) {
+        this.nomeAmigo = nomeAmigo;
+    }
+
+    public String getDataEmprestimo() {
         return dataEmprestimo;
     }
 
-    public void setDataEmprestimo(Date dataEmprestimo) {
+    public void setDataEmprestimo(String dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public Date getDataDevolucao() {
+    public String getDataDevolucao() {
         return dataDevolucao;
     }
 
-    public void setDataDevolucao(Date dataDevolucao) {
+    public void setDataDevolucao(String dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
 
-    @Override
-    public String toString() {
-        return "Emprestimo{" + "idFerramenta=" + idFerramenta + ", idAmigo=" + idAmigo + '}';
-    }
-    
-    
     
 }

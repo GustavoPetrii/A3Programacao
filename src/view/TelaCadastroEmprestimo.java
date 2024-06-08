@@ -36,12 +36,14 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
         readJTable();
         comboBoxBuscar();
     }
-
+    
+    //função para alterar os itens da comboBox
     public void comboBoxBuscar() {
         String[] myString = {"Amigo", "Ferramenta"};
         cbBusca.setModel(new javax.swing.DefaultComboBoxModel(myString));
     }
-
+    
+    //função para ler os dados do banco de dados e colocar na  tabela.
     public void readJTable() {
         DefaultTableModel modelo = (DefaultTableModel) jtEmprestimos.getModel();
         modelo.setNumRows(0);
@@ -50,10 +52,47 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
         for (Emprestimo e : edao.readEmprestimo()) {
 
             modelo.addRow(new Object[]{
-                e.getIdAmigo(),
-                e.getIdFerramenta(),
+                e.getIdEmprestimo(),
+                e.getNomeAmigo(),
+                e.getNomeFerramenta(),
                 e.getDataEmprestimo(),
                 e.getDataDevolucao(),});
+        }
+    }
+    
+    //função para ler os dados filtrados pelo nome do amigo do banco de dados e colocar na tabela.
+    public void readJTableForAmigo(String nome) {
+        DefaultTableModel modelo = (DefaultTableModel) jtEmprestimos.getModel();
+        modelo.setNumRows(0);
+        EmprestimoDAO edao = new EmprestimoDAO();
+
+        for (Emprestimo e : edao.readEmprestimoForAmigo(nome)) {
+
+            modelo.addRow(new Object[]{
+                e.getIdEmprestimo(),
+                e.getNomeAmigo(),
+                e.getNomeFerramenta(),
+                e.getDataEmprestimo(),
+                e.getDataDevolucao(),});
+
+        }
+    }
+    
+    //função para ler os dados filtrados pelo nome da ferramenta do banco de dados e colocar na tabela.
+    public void readJTableForFerramenta(String nome) {
+        DefaultTableModel modelo = (DefaultTableModel) jtEmprestimos.getModel();
+        modelo.setNumRows(0);
+        EmprestimoDAO edao = new EmprestimoDAO();
+
+        for (Emprestimo e : edao.readEmprestimoForFerramenta(nome)) {
+
+            modelo.addRow(new Object[]{
+                e.getIdEmprestimo(),
+                e.getNomeAmigo(),
+                e.getNomeFerramenta(),
+                e.getDataEmprestimo(),
+                e.getDataDevolucao(),});
+
         }
     }
 
@@ -134,7 +173,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
         });
 
         try {
-            txtDtDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+            txtDtDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -171,7 +210,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
         jLabel4.setText("Ferramenta:");
 
         try {
-            txtDtEmprestimo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+            txtDtEmprestimo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -253,11 +292,11 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Amigo", "Ferramenta", "Data empréstimo", "Data devolução"
+                "Id", "Amigo", "Ferramenta", "Data empréstimo", "Data devolução"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -307,19 +346,17 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Função para cadastrar os dados escritos nos textfields
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
 
         Emprestimo e = new Emprestimo();
         EmprestimoDAO edao = new EmprestimoDAO();
-        
-        String amigoSelecionado = cbAmigo.getSelectedItem().toString();
-        String ferramentaSelecionada = cbFerramenta.getSelectedItem().toString();
-        
-        e.setIdAmigo(Integer.parseInt(amigoSelecionado));
-        e.setIdFerramenta(Integer.parseInt(ferramentaSelecionada));
-        e.setDataEmprestimo(Date.valueOf(txtDtEmprestimo.getText()));
-        e.setDataDevolucao(Date.valueOf(txtDtDevolucao.getText()));
+
+        e.setNomeAmigo(cbAmigo.getSelectedItem().toString());
+        e.setNomeFerramenta(cbFerramenta.getSelectedItem().toString());
+        e.setDataEmprestimo(txtDtEmprestimo.getText());
+        e.setDataDevolucao(txtDtDevolucao.getText());
 
         edao.createEmprestimo(e);
 
@@ -329,7 +366,8 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
         readJTable();
 
     }//GEN-LAST:event_botaoCadastrarActionPerformed
-
+    
+    //Função para excluir os dados selecionados da tabela clicando no botão
     private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
 
         if (jtEmprestimos.getSelectedRow() != -1) {
@@ -337,8 +375,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
             Emprestimo e = new Emprestimo();
             EmprestimoDAO dao = new EmprestimoDAO();
 
-            e.setIdFerramenta((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 1));
-            e.setIdAmigo((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 0));
+            e.setIdEmprestimo((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 0));
 
             dao.deleteEmprestimo(e);
 
@@ -348,33 +385,37 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
             readJTable();
 
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um amigo para excluir.");
+            JOptionPane.showMessageDialog(null, "Selecione um emprésttimo para excluir.");
 
         }
     }//GEN-LAST:event_botaoDeletarActionPerformed
-
+    
+    //Função para pegar os dados da tabela e colocar nos textField
     private void jtEmprestimosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEmprestimosMouseClicked
 
         if (jtEmprestimos.getSelectedRow() != -1) {
-            
-            txtDtEmprestimo.setText(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 2).toString());
-            txtDtDevolucao.setText(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 3).toString());
+
+            txtDtEmprestimo.setText(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 3).toString());
+            txtDtDevolucao.setText(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 4).toString());
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um amigo para atualizar.");
 
         }
     }//GEN-LAST:event_jtEmprestimosMouseClicked
-
+    
+    //Função para atualizar os dados selecionados da tabela clicando no botão
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         if (jtEmprestimos.getSelectedRow() != -1) {
 
             Emprestimo e = new Emprestimo();
             EmprestimoDAO dao = new EmprestimoDAO();
 
-            e.setDataEmprestimo(Date.valueOf(txtDtEmprestimo.getText()));
-            e.setDataDevolucao(Date.valueOf(txtDtDevolucao.getText()));
-            e.setIdFerramenta((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 1));
+            e.setNomeAmigo(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 1).toString());
+            e.setNomeFerramenta(jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 2).toString());
+            e.setDataEmprestimo(txtDtEmprestimo.getText());
+            e.setDataDevolucao(txtDtDevolucao.getText());
+            e.setIdEmprestimo((int) jtEmprestimos.getValueAt(jtEmprestimos.getSelectedRow(), 0));
 
             dao.updateEmprestimo(e);
 
@@ -389,18 +430,19 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
     private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscaNomeActionPerformed
-
+    
+    //Função para buscar os dados que estão escritos no textField clicando no botão
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-//        String itemSelecionado = cbBusca.getSelectedItem().toString();
-//        String nome = "Nome";
-//        String marca = "Telefone";
-//
-//        if (itemSelecionado.equalsIgnoreCase(nome)) {
-//            readJTableForNome(txtBuscaNome.getText());
-//        }
-//        if (itemSelecionado.equalsIgnoreCase(marca)) {
-//            readJTableForMarca(txtBuscaNome.getText());
-//        }
+        String itemSelecionado = cbBusca.getSelectedItem().toString();
+        String amigo = "Amigo";
+        String ferramenta = "Ferramenta";
+
+        if (itemSelecionado.equalsIgnoreCase(ferramenta)) {
+            readJTableForFerramenta(txtBuscaNome.getText());
+        }
+        if (itemSelecionado.equalsIgnoreCase(amigo)) {
+            readJTableForAmigo(txtBuscaNome.getText());
+        }
 
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
@@ -415,26 +457,28 @@ public class TelaCadastroEmprestimo extends javax.swing.JFrame {
     private void txtDtEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtEmprestimoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDtEmprestimoActionPerformed
-
+    
+    //Função que puxa os nomes dos amigos cadastrados e coloca na combobox
     private void cbAmigoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbAmigoAncestorAdded
         AmigoDAO dao = new AmigoDAO();
-        
+
         List<Amigo> lista = dao.readAmigo();
         cbAmigo.removeAllItems();
-        
-        for (Amigo a : lista){
-         cbAmigo.addItem(a);
+
+        for (Amigo a : lista) {
+            cbAmigo.addItem(a);
         }
     }//GEN-LAST:event_cbAmigoAncestorAdded
-
+    
+     //Função que puxa os nomes das ferramentas cadastradas e coloca na combobox
     private void cbFerramentaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbFerramentaAncestorAdded
         FerramentaDAO dao = new FerramentaDAO();
-        
+
         List<Ferramenta> lista = dao.readFerramenta();
         cbFerramenta.removeAllItems();
-        
-        for (Ferramenta f : lista){
-         cbFerramenta.addItem(f);
+
+        for (Ferramenta f : lista) {
+            cbFerramenta.addItem(f);
         }
     }//GEN-LAST:event_cbFerramentaAncestorAdded
 
